@@ -9,19 +9,37 @@ function weekParser(weekStr) {
     for(let i=1; i<=20; ++i) {
       result.push(i);
     }
+  } else if(weekStr  == '单周上课') {
+    for(let i=1; i<=20; i+=2) {
+      result.push(i);
+    }
+  } else if(weekStr == '双周上课') {
+    for(let i=2; i<=20; i+=2) {
+      result.push(i);
+    }
   } else {
     let src = weekStr.split('周上')[0];
-    if(src.indexOf('-') > -1) {
-      let dst = src.split('-');
-      for(let i=~~dst[0]; i<=~~dst[1]; ++i) {
-        result.push(i);
-      }
-    } else if(src.indexOf(',') > -1) {
+    if(src.indexOf(',') > -1) {
       let dst = src.split(',');
       for(i of dst) {
-        result.push(~~i);
+        if(i.indexOf('-') > -1) {
+          let final = i.split('-');
+          for(let j=~~final[0]; j<=~~final[1]; ++j) {
+            result.push(j);
+          }
+        }else {
+          result.push(~~i);
+        }
       }
+    } else if(i.indexOf('-') > -1) {
+      let final = src.split('-');
+      for(let j=~~final[0]; j<=~~final[1]; ++j) {
+        result.push(j);
+      }
+    }else {
+      result.push(~~i);
     }
+
   }
   return result;
 }
